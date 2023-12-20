@@ -386,8 +386,16 @@ module XeroRuby
         end
       end
       request.headers = header_params
-      timeout = @config.timeout
-      request.options.timeout = timeout if timeout > 0
+
+      open_timeout = @config.open_timeout || @config.timeout
+      request.options.open_timeout = open_timeout if open_timeout > 0
+
+      read_timeout = @config.read_timeout || @config.timeout
+      request.options.read_timeout = read_timeout if read_timeout > 0
+
+      write_timeout = @config.write_timeout || @config.timeout
+      request.options.write_timeout = write_timeout if write_timeout > 0
+
       request.body = req_body
       request.url url
       request.params = query_params
